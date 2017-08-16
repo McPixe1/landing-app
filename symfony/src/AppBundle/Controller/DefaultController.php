@@ -20,6 +20,7 @@ class DefaultController extends Controller {
         ]);
     }
 
+    
     /**
      * @Route("/pruebas", name="pruebas", methods="GET")
      */
