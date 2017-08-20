@@ -8,7 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
  * Block
  *
  * @ORM\Table(name="block")
+ * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="disc", type="string")
+ * @ORM\DiscriminatorMap( {"block" = "Block", "overviewBlock" = "OverviewBlock", "headerBlock" = "HeaderBlock"} )
  * @ORM\Entity(repositoryClass="BackendBundle\Repository\BlockRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Block
 {
@@ -21,19 +26,12 @@ class Block
      */
     private $id;
 
-    /**
+      /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="type", type="string", length=255)
      */
-    private $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="content", type="text")
-     */
-    private $content;
+    private $type;
 
 
     /**
@@ -47,51 +45,27 @@ class Block
     }
 
     /**
-     * Set name
+     * Set $type
      *
-     * @param string $name
+     * @param array $type
      *
      * @return Block
      */
-    public function setName($name)
+    public function setType($type)
     {
-        $this->name = $name;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get $type
      *
      * @return string
      */
-    public function getName()
+    public function getType()
     {
-        return $this->name;
-    }
-
-    /**
-     * Set content
-     *
-     * @param string $content
-     *
-     * @return Block
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get content
-     *
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
+        return $this->type;
     }
 }
 

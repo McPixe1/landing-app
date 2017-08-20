@@ -36,6 +36,21 @@ class Page {
      * @ORM\JoinColumn(name="theme_id", referencedColumnName="id")
      */
     private $theme;
+    
+     /**
+     * Asociación many to many unidireccional
+     * Muchas paginas tienen muchos blockes
+     * @ORM\ManyToMany(targetEntity="Block")
+     * @ORM\JoinTable(name="pages_blocks",
+     *      joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="block_id", referencedColumnName="id")}
+     *      )
+     */
+    private $blocks;
+    
+    public function __construct() {
+        $this->blocks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -91,5 +106,39 @@ class Page {
     public function getTheme()
     {
         return $this->theme;
+    }
+
+    /**
+     * Add block
+     *
+     * @param \BackendBundle\Entity\Block $block
+     *
+     * @return Page
+     */
+    public function addBlock(\BackendBundle\Entity\Block $block)
+    {
+        $this->blocks[] = $block;
+
+        return $this;
+    }
+
+    /**
+     * Remove block
+     *
+     * @param \BackendBundle\Entity\Block $block
+     */
+    public function removeBlock(\BackendBundle\Entity\Block $block)
+    {
+        $this->blocks->removeElement($block);
+    }
+
+    /**
+     * Get blocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBlocks()
+    {
+        return $this->blocks;
     }
 }

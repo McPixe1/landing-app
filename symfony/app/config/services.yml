@@ -41,4 +41,4 @@ services:
         
     app.helpers:
         class: AppBundle\Services\Helpers
-        arguments: ["null"]
+        arguments: [ "@doctrine.orm.entity_manager" ]

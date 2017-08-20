@@ -7,19 +7,153 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Services\Helpers;
 use BackendBundle\Entity\Page;
+use BackendBundle\Entity\Theme;
+use BackendBundle\Entity\Block;
 
 class PageController extends Controller {
 
     /**
-     * @Route("/page", name="page", methods="GET")
+     * @Route("/page/test", name="page-test", methods="GET")
      */
     public function indexAction(Request $request, Helpers $helpers) {
-        
+
         $em = $this->getDoctrine()->getManager();
         $pages = $em->getRepository(Page::class)->findAll();
 
         $response = $helpers->toJson($pages);
         return $response;
+    }
+
+    /**
+     * @Route("/page/new", name="new-page", methods="POST")
+     */
+    public function newAction(Request $request, Helpers $helpers) {
+        $em = $this->getDoctrine()->getManager();
+        $json = $request->get("json", null);
+
+        if ($json != null) {
+            $params = json_decode($json);
+
+            $name = (isset($params->name)) ? $params->name : null;
+            $theme_id = (isset($params->theme)) ? $params->theme : null;
+            $block_id = (isset($params->block)) ? $params->block : null;
+
+            if ($theme_id != null) {
+                $theme = $em->getRepository(Theme::class)->findOneBy(
+                        array(
+                            "id" => $theme_id
+                ));
+            }
+            if ($block_id != null) {
+                $block_type = $em->getRepository(Block::class)->findOneBy(
+                        array(
+                            "id" => $block_id
+                ));
+            }
+
+            $page = new Page();
+            $page->setName($name);
+            $page->setTheme($theme);
+
+            $block = clone $block_type;
+            $page->addBlock($block);
+            $em->persist($block);
+            $em->persist($page);
+            $em->flush();
+
+            $page = $em->getRepository(Page::class)->findOneBy(array(
+                "name" => $name,
+                "theme" => $theme_id
+            ));
+
+            $data = array(
+                "status" => "succes",
+                "code" => 200,
+                "data" => $page
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "data" => "Página no creada"
+            );
+        }
+        return $helpers->toJson($data);
+    }
+
+    /**
+     * @Route("/page/addblock", name="add-block", methods="POST")
+     */
+    public function addBlockAction(Request $request, Helpers $helpers) {
+        $em = $this->getDoctrine()->getManager();
+        $json = $request->get("json", null);
+
+        if ($json != null) {
+            $params = json_decode($json);
+
+            $page_id = (isset($params->page_id)) ? $params->page_id : null;
+            $block_id = (isset($params->block_id)) ? $params->block_id : null;
+
+            $page = $em->getRepository(Page::class)->findOneBy(array(
+                "id" => $page_id
+            ));
+            $block = $em->getRepository(Block::class)->findOneBy(array(
+                "id" => $block_id
+            ));
+
+            $page->addBlock($block);
+            $em->flush();
+            
+            $data = array(
+                "status" => "succes",
+                "code" => 200,
+                "data" => $page
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "data" => "Página no creada"
+            );
+        }
+        return $helpers->toJson($data);
+    }
+
+    /**
+     * @Route("/page/removeblock", name="remove-block", methods="POST")
+     */
+    public function removeBlockAction(Request $request, Helpers $helpers) {
+        $em = $this->getDoctrine()->getManager();
+        $json = $request->get("json", null);
+
+        if ($json != null) {
+            $params = json_decode($json);
+
+            $page_id = (isset($params->page_id)) ? $params->page_id : null;
+            $block_id = (isset($params->block_id)) ? $params->block_id : null;
+
+            $page = $em->getRepository(Page::class)->findOneBy(array(
+                "id" => $page_id
+            ));
+            $block = $em->getRepository(Block::class)->findOneBy(array(
+                "id" => $block_id
+            ));
+
+            $page->removeBlock($block);
+
+            $data = array(
+                "status" => "succes",
+                "code" => 200,
+                "data" => $page
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "data" => "Página no creada"
+            );
+        }
+        return $helpers->toJson($data);
     }
 
 }
