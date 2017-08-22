@@ -67,7 +67,7 @@ class PageController extends Controller {
             ));
 
             $data = array(
-                "status" => "succes",
+                "status" => "success",
                 "code" => 200,
                 "data" => $page
             );
@@ -79,6 +79,33 @@ class PageController extends Controller {
             );
         }
         return $helpers->toJson($data);
+    }
+
+    /**
+     * @Route("/page/{id}", name="page", methods="GET")
+     */
+    public function pageAction(Request $request, Helpers $helpers, $id = null) {
+
+        $em = $this->getDoctrine()->getManager();
+        $page = $em->getRepository(Page::class)->findOneBy(array(
+            "id" => $id
+        ));
+
+        if ($page) {
+            $data = array(
+                "status" => "success",
+                "code" => 200,
+                "data" => $page
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "msg" => "La página no existe"
+            );
+        }
+        $response = $helpers->toJson($data);
+        return $response;
     }
 
     /**
@@ -103,9 +130,9 @@ class PageController extends Controller {
 
             $page->addBlock($block);
             $em->flush();
-            
+
             $data = array(
-                "status" => "succes",
+                "status" => "success",
                 "code" => 200,
                 "data" => $page
             );
@@ -113,7 +140,7 @@ class PageController extends Controller {
             $data = array(
                 "status" => "error",
                 "code" => 400,
-                "data" => "Página no creada"
+                "data" => "Bloque no añadido"
             );
         }
         return $helpers->toJson($data);
@@ -142,7 +169,7 @@ class PageController extends Controller {
             $page->removeBlock($block);
 
             $data = array(
-                "status" => "succes",
+                "status" => "success",
                 "code" => 200,
                 "data" => $page
             );

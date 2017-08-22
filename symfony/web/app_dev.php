@@ -18,6 +18,16 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
     exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
 }
 
+header("Acces-Control-Allow-Origin: '*'");
+header("Acces-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Acces-Control-Request-Method");
+header("Acces-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+
+$method = $_SERVER["REQUEST_METHOD"];
+if($method == "OPTIONS"){
+    die();
+}
+
 require __DIR__.'/../vendor/autoload.php';
 Debug::enable();
 

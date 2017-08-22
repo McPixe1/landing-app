@@ -33,6 +33,8 @@ class Helpers {
         $response = new Response();
         $response->setContent($json);
         $response->headers->set('Content-Type', 'application/json');
+        //Para poder hacer peticiones ajax desde cualquier cliente
+        $response->headers->set('Access-Control-Allow-Origin', '*');
 
         return $response;
     }

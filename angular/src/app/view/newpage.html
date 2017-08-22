@@ -1,0 +1,26 @@
+<div class="col-md-12">
+  <h1>{{titulo}}</h1>
+
+  <div class="alert alert-success" *ngIf="status == 'success'">
+  	Datos guardados de <strong>{{page.name}}</strong>
+  </div>
+   <div class="alert alert-danger" *ngIf="status == 'error'">
+  	Error, datos NO guardados de <strong>{{page.name}}</strong>
+  </div>
+
+  <form #newPageForm="ngForm" (ngSubmit)="onSubmit()">
+    <p>
+      <label>Nombre:</label>
+      <input type="text" class="form-control" name="name" ngModel #name="ngModel" [(ngModel)]="page.name" required/>
+    </p>
+      <p>
+      <label>Tema:</label>
+      <input type="text" class="form-control" name="theme" ngModel #name="ngModel" [(ngModel)]="page.theme" required/>
+    </p>
+      <p>
+      <label>Bloque:</label>
+      <input type="text" class="form-control" name="block" ngModel #name="ngModel" [(ngModel)]="page.block" required/>
+    </p>
+    <input type="submit" value="Crear Página" class="btn btn-success" />
+  </form>
+</div>
