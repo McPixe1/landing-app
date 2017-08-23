@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Page } from '../model/page';
 import { PageService } from '../services/page.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Location }                 from '@angular/common';
+import { Location } from '@angular/common';
 
 // Decorador component, indicamos en que etiqueta se va a cargar la 
 
@@ -41,7 +41,7 @@ export class NewPageComponent implements OnInit {
           this.page = response.data;
           console.log(this.page);
           console.log(this.status);
-              this.router.navigate(['/index']);
+          this.router.navigate(['/index']);
 
         }
       },

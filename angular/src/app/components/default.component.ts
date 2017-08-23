@@ -1,12 +1,53 @@
-// Importar el núcleo de Angular
-import {Component, OnInit} from '@angular/core';
- 
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Page } from '../model/page';
+import { PageService } from '../services/page.service';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+
 // Decorador component, indicamos en que etiqueta se va a cargar la 
 
 @Component({
-    selector: 'default',
-    template: '<h1>Componente por defecto</h1>'
+  selector: 'default',
+  templateUrl: '../view/default.html',
+  providers: [PageService]
 })
- 
+
 // Clase del componente donde irán los datos y funcionalidades
-export class DefaultComponent { }
+export class DefaultComponent implements OnInit {
+  public title = "Listado de páginas";
+  public pages;
+  public errorMessage;
+  public status;
+
+  constructor(
+    private pageService: PageService,
+    private route: ActivatedRoute,
+  ) {}
+
+  ngOnInit() {
+    this.getAllPages();
+  }
+
+  getAllPages() {
+    this.route.params.subscribe(params => {
+      this.pageService.getPages().subscribe(
+        response => {
+          this.status = response.status;
+          if (this.status != "success") {
+            this.status = "error";
+          } else {
+            this.pages = response.data;
+          }
+        },
+        error => {
+          this.errorMessage = < any > error;
+          if (this.errorMessage != null) {
+            console.log(this.errorMessage);
+            alert("Error en la petición");
+          }
+        }
+      );
+    });
+  }
+
+}

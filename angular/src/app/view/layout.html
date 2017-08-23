@@ -1,7 +1,9 @@
-<h1>Landing Generator</h1>
-   <nav>
+<router-outlet name="header">
+  <h1>Landing Generator</h1>
+  <nav>
     <a routerLink="/">Inicio</a>
-     <a routerLink="/newpage">Nueva landing</a>
-   </nav>
-   <hr>
-   <router-outlet></router-outlet>
+    <a routerLink="/newpage">Nueva landing</a>
+  </nav>
+  <hr>
+</router-outlet>
+<router-outlet></router-outlet>

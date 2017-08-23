@@ -1,3 +1,27 @@
-<div *ngIf="page">
-	<h1>{{page.name}}</h1>
-</div>
+{{page.name}}
+<ul>
+  <li *ngFor="let block of page.blocks">{{block.type}}</li>
+</ul>
+
+<!--   <!doctype html>
+  <html lang="es">
+
+  <head>
+    <meta charset="utf-8">
+    <title>{{page.name}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://s3-eu-west-1.amazonaws.com/arenagg-static/landing/shared/css/styles-landing.css?v=1.3">
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://s3-eu-west-1.amazonaws.com/arenagg-static/landing/shared/js/landings-1.2.min.js"></script>
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/1.9.32/css/materialdesignicons.min.css">
+  </head>
+
+  <body>
+    <div class="container">
+      hola ke ase desde de la pagina
+    </div>
+  </body>
+
+  </html>
+ -->

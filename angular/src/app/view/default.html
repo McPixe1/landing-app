@@ -1,0 +1,7 @@
+<div class="all-pages">
+	<ul id="page-list" *ngIf="pages">
+		<li *ngFor="let page of pages">
+			<a [routerLink]="['/page', page.id]">{{page.name}}</a>
+		</li>
+	</ul>
+</div>

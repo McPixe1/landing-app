@@ -13,14 +13,28 @@ use BackendBundle\Entity\Block;
 class PageController extends Controller {
 
     /**
-     * @Route("/page/test", name="page-test", methods="GET")
+     * @Route("/pages", name="pages", methods="GET")
      */
     public function indexAction(Request $request, Helpers $helpers) {
 
         $em = $this->getDoctrine()->getManager();
         $pages = $em->getRepository(Page::class)->findAll();
-
-        $response = $helpers->toJson($pages);
+        
+        if($pages != null){
+              $data = array(
+                "status" => "success",
+                "code" => 200,
+                "data" => $pages
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "data" => "No hay páginas"
+            );
+        }
+        
+        $response = $helpers->toJson($data);
         return $response;
     }
 

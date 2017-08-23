@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { DefaultComponent } from './components/default.component';
 import { NewPageComponent } from './components/newpage.component';
 import { PageComponent } from './components/page.component';
+import {SafePipe} from './services/safepipe.service';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { PageComponent } from './components/page.component';
     AppComponent,
     DefaultComponent,
     NewPageComponent,
-    PageComponent
+    PageComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,
