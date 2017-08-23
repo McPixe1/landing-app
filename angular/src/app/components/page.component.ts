@@ -28,6 +28,8 @@ export class PageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.page = new Page(null, null, null);
+    
     this.route.params.subscribe(params => {
       let id = +params["id"];
 

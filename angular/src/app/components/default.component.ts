@@ -18,6 +18,7 @@ export class DefaultComponent implements OnInit {
   public pages;
   public errorMessage;
   public status;
+  public loading = "show";
 
   constructor(
     private pageService: PageService,
@@ -37,6 +38,7 @@ export class DefaultComponent implements OnInit {
             this.status = "error";
           } else {
             this.pages = response.data;
+            this.loading = "hide";
           }
         },
         error => {
