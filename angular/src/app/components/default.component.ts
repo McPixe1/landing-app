@@ -14,7 +14,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 // Clase del componente donde irán los datos y funcionalidades
 export class DefaultComponent implements OnInit {
-  public title = "Listado de páginas";
+  public titulo = "Listado de páginas";
   public pages;
   public errorMessage;
   public status;

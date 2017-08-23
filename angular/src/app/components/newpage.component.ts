@@ -39,10 +39,7 @@ export class NewPageComponent implements OnInit {
           this.status = "error";
         } else {
           this.page = response.data;
-          console.log(this.page);
-          console.log(this.status);
-          this.router.navigate(['/index']);
-
+          this.router.navigate(['/page', this.page.id]);
         }
       },
       error => {
@@ -54,9 +51,5 @@ export class NewPageComponent implements OnInit {
       }
     );
   }
-
-  /*redirectToPage() {
-    this.router.navigate(['/index']);
-  }*/
 
 }

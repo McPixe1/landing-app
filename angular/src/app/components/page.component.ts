@@ -5,13 +5,14 @@ import { Page } from '../model/page';
 import { PageService } from '../services/page.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { BlockComponent } from './block.component';
 
 // Decorador component, indicamos en que etiqueta se va a cargar la 
 
 @Component({
   selector: 'page',
   templateUrl: '../view/page.html',
-  providers: [PageService]
+  providers: [PageService, BlockComponent],
 })
 
 // Clase del componente donde irán los datos y funcionalidades

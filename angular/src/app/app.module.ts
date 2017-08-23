@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { DefaultComponent } from './components/default.component';
 import { NewPageComponent } from './components/newpage.component';
 import { PageComponent } from './components/page.component';
+import { BlockComponent } from './components/block.component';
 import { SafePipe } from './pipes/safe.pipe';
 
 
@@ -18,6 +19,7 @@ import { SafePipe } from './pipes/safe.pipe';
     DefaultComponent,
     NewPageComponent,
     PageComponent,
+    BlockComponent,
     SafePipe
   ],
   imports: [

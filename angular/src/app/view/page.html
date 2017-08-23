@@ -1,6 +1,10 @@
 {{page.name}}
 <ul>
-  <li *ngFor="let block of page.blocks">{{block.type}}</li>
+  <li *ngFor="let block of page.blocks">
+  <block [block]="block"></block>
+  
+
+ </li>
 </ul>
 
 <!--   <!doctype html>
