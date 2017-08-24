@@ -1,11 +1,13 @@
+<div class="container">
   <h1>{{titulo}}</h1>
-<div class="loader" *ngIf="loading == 'show'">
-	<img src="assets/images/loading.gif" style="width: 250px;margin: 0 auto;display: block;"/>
-</div>
-<div class="all-pages">
-	<ul id="page-list" *ngIf="pages">
-		<li *ngFor="let page of pages">
-			<a [routerLink]="['/page', page.id]">{{page.name}}</a>
-		</li>
-	</ul>
+  <div class="preloader" *ngIf="loading == 'show'">
+    <img src="assets/images/loading.gif" style="width: 250px;margin: 0 auto;display: block;" />
+  </div>
+  <div class="all-pages">
+    <ul id="page-list" *ngIf="pages">
+      <li *ngFor="let page of pages">
+        <a [routerLink]="['/page', page.id]">{{page.name}}</a>
+      </li>
+    </ul>
+  </div>
 </div>

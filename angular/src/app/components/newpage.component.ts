@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Page } from '../model/page';
 import { PageService } from '../services/page.service';
+import { ThemeService } from '../services/theme.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -11,7 +12,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'new-page',
   templateUrl: '../view/newpage.html',
-  providers: [PageService]
+  providers: [PageService, ThemeService]
 })
 
 // Clase del componente donde irán los datos y funcionalidades
@@ -21,17 +22,22 @@ export class NewPageComponent implements OnInit {
   public page;
   public errorMessage;
   public status;
+  public themes;
   constructor(
     private pageService: PageService,
+    private themeService: ThemeService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.page = new Page(null, null, null);
+
+    this.getAllThemes();
   }
 
-  onSubmit() {
+  onSubmit(newPageForm) {
+
     this.pageService.create(this.page).subscribe(
       response => {
         this.status = response.status;
@@ -39,6 +45,7 @@ export class NewPageComponent implements OnInit {
           this.status = "error";
         } else {
           this.page = response.data;
+          console.log(this.page);
           this.router.navigate(['/page', this.page.id]);
         }
       },
@@ -50,6 +57,17 @@ export class NewPageComponent implements OnInit {
         }
       }
     );
+  }
+
+
+  getAllThemes() {
+    this.route.params.subscribe(params => {
+      this.themeService.getThemes().subscribe(
+        response => {
+          this.themes = response.data;
+        }
+      );
+    });
   }
 
 }

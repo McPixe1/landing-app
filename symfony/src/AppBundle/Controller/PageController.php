@@ -15,7 +15,7 @@ class PageController extends Controller {
     /**
      * @Route("/pages", name="pages", methods="GET")
      */
-    public function indexAction(Request $request, Helpers $helpers) {
+    public function pagesAction(Request $request, Helpers $helpers) {
 
         $em = $this->getDoctrine()->getManager();
         $pages = $em->getRepository(Page::class)->findAll();
@@ -49,13 +49,13 @@ class PageController extends Controller {
             $params = json_decode($json);
 
             $name = (isset($params->name)) ? $params->name : null;
-            $theme_id = (isset($params->theme)) ? $params->theme : null;
+            $theme_name = (isset($params->theme)) ? $params->theme : null;
             $block_id = (isset($params->block)) ? $params->block : null;
 
-            if ($theme_id != null) {
+            if ($theme_name != null) {
                 $theme = $em->getRepository(Theme::class)->findOneBy(
                         array(
-                            "id" => $theme_id
+                            "name" => $theme_name
                 ));
             }
             if ($block_id != null) {
@@ -76,8 +76,7 @@ class PageController extends Controller {
             $em->flush();
 
             $page = $em->getRepository(Page::class)->findOneBy(array(
-                "name" => $name,
-                "theme" => $theme_id
+                "name" => $name
             ));
 
             $data = array(
